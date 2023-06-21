@@ -1,8 +1,8 @@
 torchrun --nproc_per_node=4 --master_port=20001 fastchat/train/train_mem.py \
-    --model_name_or_path ~/model_weights/llama_7b  \
+    --model_name_or_path ~/model_weights/vicuna_7b  \
     --data_path /home/keyang/FastChat/data/action_data_3135.json \
     --bf16 True \
-    --output_dir action_llama_7b \
+    --output_dir action_vicuna_7b \
     --num_train_epochs 4 \
     --per_device_train_batch_size 1 \
     --per_device_eval_batch_size 8 \

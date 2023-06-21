@@ -18,6 +18,7 @@ from dataclasses import dataclass, field
 import json
 import pathlib
 from typing import Dict, Optional, Sequence
+import pdb
 
 import numpy as np
 import torch
@@ -72,7 +73,7 @@ def safe_save_model_for_hf_trainer(trainer: transformers.Trainer, output_dir: st
         cpu_state_dict = {key: value.cpu() for key, value in state_dict.items()}
         del state_dict
         trainer._save(output_dir, state_dict=cpu_state_dict)  # noqa
-
+    # trainer._save(output_dir, state_dict=state_dict)
 
 def preprocess(
     sources,
@@ -80,6 +81,7 @@ def preprocess(
 ) -> Dict:
     conv = get_conversation_template("vicuna")
     roles = {"human": conv.roles[0], "gpt": conv.roles[1]}
+    # roles = {"system": conv.roles[0], "ai": conv.roles[1]}
 
     # Apply prompt templates
     conversations = []
