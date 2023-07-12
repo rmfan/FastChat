@@ -17,6 +17,7 @@ from fastapi.responses import StreamingResponse, JSONResponse
 import requests
 
 from fastchat.modules.gptq import GptqConfig
+from longchat.train.monkey_patch.llama_condense_monkey_patch import replace_llama_with_condense
 
 try:
     from transformers import (
@@ -423,16 +424,25 @@ if __name__ == "__main__":
     parser.add_argument(
         "--controller-address", type=str, default="http://localhost:21001"
     )
+    parser.add_argument(
+        "--condense-rescale", type=int, default=0)
     add_model_args(parser)
     parser.add_argument(
         "--model-names",
         type=lambda s: s.split(","),
         help="Optional display comma separated names",
     )
-    parser.add_argument("--limit-model-concurrency", type=int, default=5)
+    parser.add_argument(
+        "--limit-worker-concurrency",
+        type=int,
+        default=5,
+        help="Limit the model concurrency to prevent OOM.",
+    )
     parser.add_argument("--stream-interval", type=int, default=2)
     parser.add_argument("--no-register", action="store_true")
     args = parser.parse_args()
+    if args.condense_rescale > 1:
+        replace_llama_with_condense(args.condense_rescale)
     logger.info(f"args: {args}")
 
     if args.gpus:
