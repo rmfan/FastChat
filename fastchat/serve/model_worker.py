@@ -433,7 +433,7 @@ if __name__ == "__main__":
         help="Optional display comma separated names",
     )
     parser.add_argument(
-        "--limit-worker-concurrency",
+        "--limit-model-concurrency",
         type=int,
         default=5,
         help="Limit the model concurrency to prevent OOM.",
