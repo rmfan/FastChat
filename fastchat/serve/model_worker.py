@@ -106,7 +106,6 @@ class ModelWorker:
             self.context_len = self.model.config.max_position_embeddings
         else:
             self.context_len = 2048
-        self.context_len = 8192
         # generate_stream
         is_chatglm = "chatglm" in str(type(self.model)).lower()
         if is_chatglm:
